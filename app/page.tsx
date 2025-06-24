@@ -95,6 +95,19 @@ export default function Home() {
                   todo.dueDate ? todo.dueDate : ""
                 ).toLocaleDateString()}
               </span>
+
+              {todo.imageUrl ? (
+                <img
+                  src={todo.imageUrl}
+                  alt="Preview"
+                  className="w-full h-32 object-cover rounded mt-2"
+                />
+              ) : (
+                <span className="text-sm text-gray-400 mt-2">
+                  {" "}
+                  Loading image...
+                </span>
+              )}
               <button
                 onClick={() => handleDeleteTodo(todo.id)}
                 className="text-red-500 hover:text-red-700 transition duration-300"
