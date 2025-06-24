@@ -13,4 +13,20 @@ model Todo {
   createdAt DateTime  @default(now())
   dueDate DateTime?
   imageUrl String?
+
+  //Relations
+  dependencies TaskDependency[] @relation("DependsOn")
+  dependents TaskDependency[] @relation("DependedBy")
+
+}
+
+model TaskDependency{
+  id        Int      @id @default(autoincrement())
+  taskId    Int
+  dependsOnId    Int
+
+  task Todo @relation("DependsOn", fields: [taskId], references: [id])
+  dependsOn Todo @relation("DependedBy", fields: [dependsOnId], references: [id])
+
+  @@unique([taskId, dependsOnId])
 }
