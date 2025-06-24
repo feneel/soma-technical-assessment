@@ -1,15 +1,28 @@
 "use client";
 import { Todo } from "@prisma/client";
 import { useState, useEffect } from "react";
+import DependencyGraph from "./DependencyGraph";
 
 export default function Home() {
   const [newTodo, setNewTodo] = useState("");
   const [todos, setTodos] = useState([]);
   const [dueDate, setDueDate] = useState("");
+  const [dependencies, setDependencies] = useState([]);
 
   useEffect(() => {
     fetchTodos();
+    fetchDependencies();
   }, []);
+
+  const fetchDependencies = async () => {
+    try {
+      const res = await fetch("/api/dependencies");
+      const data = await res.json();
+      setDependencies(data);
+    } catch (error) {
+      console.error("Failed to fetch dependencies:", error);
+    }
+  };
 
   const fetchTodos = async () => {
     try {
@@ -130,6 +143,22 @@ export default function Home() {
             </li>
           ))}
         </ul>
+
+        <h2 className="text-2xl text-white mt-10 mb-4">
+          Task Dependency Graph
+        </h2>
+        <DependencyGraph todos={todos} dependencies={dependencies} />
+
+        <button
+          onClick={async () => {
+            await fetch("/api/scheduler/recalculate", { method: "POST" });
+            fetchTodos();
+            alert("Recalculated scheduling info!");
+          }}
+          className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+        >
+          Recalculate Critical Path & Start Dates
+        </button>
       </div>
     </div>
   );
