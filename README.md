@@ -53,3 +53,19 @@ Implement a task dependency system that allows tasks to depend on other tasks. T
 3. Submit a link to your repository in the application form.
 
 Thanks for your time and effort. We'll be in touch soon!
+
+
+
+## Solution
+
+
+Here is the completed solution with support for:
+
+- ✅ Due dates (shown red if overdue)
+
+- ✅ Auto-generated image preview from Pexels API
+- ✅ Task dependencies with critical path and DAG visualization
+
+<img width="1669" alt="Screenshot 2025-06-24 at 12 43 52" src="https://github.com/user-attachments/assets/784944c3-b558-4c15-84a1-9ed2a8dd0fe1" />
+
+  
